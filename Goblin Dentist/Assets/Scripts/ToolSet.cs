@@ -6,21 +6,32 @@ using System.Linq;
 
 public class ToolSet : MonoBehaviour
 {
-    GameObject leftClickedObject;
-    GameObject rightClickedObject;
     RaycastHit2D frontMostRayCastHit;
-    SpriteRenderer spriteRenderer;
     public string toolName;
     bool select;
+    GameObject tool;
+
+    private bool empty = true;
 
     float zAxis = 2f;
     Vector3 mousePosition;
-    private bool empty = true;
-    Vector3 startPosition;
+    Vector2 startPosition;
+    Vector2 direction;
     public float moveSpeed = 100f;
+    WorldToPixel gameMousePos;
+    Rigidbody2D rb;
+
+    public Texture2D toolTexture;
+    public CursorMode cursorMode = CursorMode.ForceSoftware;
+    public Vector2 hotSpot = Vector2.zero;
+    Material material;
+    Texture texture;
+
+    RectTransform rt;
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         startPosition = gameObject.transform.position;
     }
 
@@ -31,6 +42,7 @@ public class ToolSet : MonoBehaviour
         {
             select = true;
             SelectObject(select);
+            
             //mousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             //transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
             
@@ -40,15 +52,13 @@ public class ToolSet : MonoBehaviour
             select = false;
             SelectObject(select);
         }
-        if(gameObject.name == toolName)
-        {
-            //WorldUnitsInCamera.y = Camera.GetComponent<Camera>().orthographicSize * 2;
-            mousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            mousePosition.x = mousePosition.x / Screen.width * WorldUnitin;
-            mousePosition.y = mousePosition.y / Screen.height;
-            transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
+        //if(gameObject.name == toolName)
+        //{
+        //    mousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        //    direction = (mousePosition - transform.position).normalized;
+        //    rb.velocity = new Vector2(direction.x * moveSpeed, direction.y * moveSpeed);
 
-        }
+        //}
         else
         {
             transform.position = startPosition;
@@ -67,10 +77,21 @@ public class ToolSet : MonoBehaviour
         {
             if (hits.Count() != 0)
             {
-                toolName = hits[0].collider.gameObject.name;
+                
+                tool = hits[0].collider.gameObject;
                 empty = false;
-                Cursor.visible = false;
-                Debug.Log("Clicked on object" + toolName );
+
+                
+                int width = Mathf.RoundToInt(toolTexture.width * tool.transform.localScale.x);
+                int height = Mathf.RoundToInt(toolTexture.height * tool.transform.localScale.y);
+                //renderer.material.mainTexture = newTex;
+                //TextureScale.Bilinear(newTex, tex.width * 2, tex.height * 2);
+
+                //cursorTexture.Resize(width - 100, height - 100);
+                //cursorTexture.Apply();
+                Cursor.SetCursor(toolTexture, hotSpot, cursorMode);
+                Debug.Log("Clicked on object" + tool.name);
+
                 return true;               
             }
             else
