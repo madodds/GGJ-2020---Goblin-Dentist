@@ -40,7 +40,7 @@ public class Tooth : MonoBehaviour
 
     private (ToothType type, ToothAttribute attribute, string spritePath) toothSelection;
     
-    public void Init(Vector2 position, Vector2 scale, ToothArea toothArea, int layerOrder, int badToothProbability)
+    public void Init(Vector3 position, Vector3 scale, ToothArea toothArea, int layerOrder, int badToothProbability)
     {
         // Determine if the tooth should be healthy.
         ToothAttribute preferredAttribute = UnityEngine.Random.Range(1, 100) < 
@@ -55,7 +55,7 @@ public class Tooth : MonoBehaviour
 
         // Setup the location and sprite
         SpriteRenderer toothSprite = GetComponent<SpriteRenderer>();
-        toothSprite.transform.position = position;
+        toothSprite.transform.position += position;
         toothSprite.transform.localScale = scale;
         toothSprite.sprite = Resources.Load(toothSelection.spritePath, typeof(Sprite)) as Sprite;
         toothSprite.sortingOrder = layerOrder;
