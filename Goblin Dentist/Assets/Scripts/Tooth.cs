@@ -25,21 +25,19 @@ public class Tooth : MonoBehaviour
 
     public enum ToothArea
     {
-        UpperLeft,
-        UpperRight,
-        LowerLeft,
-        LowerRight
+        Upper,
+        Lower
     }
 
     private List<(ToothType type, ToothAttribute attribute, string spritePath)> toothData 
         = new List<(ToothType type, ToothAttribute attribute, string spritePath)>
     {
-        (ToothType.Healthy, ToothAttribute.Healthy, "Teeth/{0}/gobtooth_n"),
-        (ToothType.Wooden, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_w"),
-        (ToothType.Gold, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_g"),
-        (ToothType.Metal, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_m"),
-        (ToothType.Missing, ToothAttribute.Rotten, ""),
-        (ToothType.Missing, ToothAttribute.Missing, "")
+        (ToothType.Healthy, ToothAttribute.Healthy, "Teeth/Normal/{0}"),
+        (ToothType.Wooden, ToothAttribute.Rotten, "Teeth/Wood/{0}"),
+        (ToothType.Gold, ToothAttribute.Rotten, "Teeth/Gold/{0}"),
+        (ToothType.Metal, ToothAttribute.Rotten, "Teeth/Unique/{0}/gobtooth_nazgul"),
+        (ToothType.Missing, ToothAttribute.Rotten, "nothing"),
+        (ToothType.Missing, ToothAttribute.Missing, "nothing")
     };
 
     private (ToothType type, ToothAttribute attribute, string spritePath) toothSelection;
@@ -106,7 +104,9 @@ public class Tooth : MonoBehaviour
 
         // Set the tooth sprite path based on the area it exists. Requires the folder structure to be setup correctly.
         toothSelection.spritePath = string.Format(toothSelection.spritePath, Enum.GetName(typeof(ToothArea), selectedToothArea));
-        toothSprite.sprite = Resources.Load(toothSelection.spritePath, typeof(Sprite)) as Sprite;
+        var spriteList = Resources.LoadAll(toothSelection.spritePath, typeof(Sprite));
+        
+        toothSprite.sprite = spriteList[UnityEngine.Random.Range(0,spriteList.Length)] as Sprite;
         selectedToothType = toothSelection.type;
         selectedAttribute = attribute;
     }

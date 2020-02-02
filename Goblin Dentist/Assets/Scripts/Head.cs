@@ -7,9 +7,10 @@ public abstract class Head : MonoBehaviour
 {
     public enum HeadType
     {
-        Pointy,
+        Jawless,
         Scary,
-        Derpy
+        Derpy,
+        Round
     }
     public GameObject tooth;
 
