@@ -11,9 +11,13 @@ public class Tool : MonoBehaviour
     public Texture2D toolTexture;
     public CursorMode cursorMode = CursorMode.ForceSoftware;
     public Vector2 hotSpot = Vector2.zero;
+
+    public AudioSource mySFX;
+    public List<AudioClip> myClips;
     // Start is called before the first frame update
     void Start()
     {
+        myClips.Add(Resources.Load<AudioClip>("SoundAssets/Tool_Grab1_Household Blanket Grab And Pull 01"));
     }
 
     // Update is called once per frame
@@ -37,6 +41,7 @@ public class Tool : MonoBehaviour
         if (hits.Count() != 0)
         {
             tool = hits[0].collider.gameObject;
+            AudioManager.Instance.toolPickup();
             ToolManager.Instance.setInActive(tool);
             ToolManager.Instance.setrepairMode(repairMode);
             Cursor.SetCursor(this.toolTexture, hotSpot, cursorMode);
