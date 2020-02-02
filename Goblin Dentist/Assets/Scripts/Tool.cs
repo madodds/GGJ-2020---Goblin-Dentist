@@ -6,7 +6,7 @@ using System.Linq;
 
 public class Tool : MonoBehaviour
 {
-    public string repairMode;
+    public Tooth.ToothType repairMode;
     GameObject tool;
     public Texture2D toolTexture;
     public CursorMode cursorMode = CursorMode.ForceSoftware;
@@ -36,15 +36,11 @@ public class Tool : MonoBehaviour
         List<RaycastHit2D> hits = Physics2D.LinecastAll(clickPostion, clickPostion).ToList();
         if (hits.Count() != 0)
         {
-            
-
             tool = hits[0].collider.gameObject;
             ToolManager.Instance.setInActive(tool);
             ToolManager.Instance.setrepairMode(repairMode);
             Cursor.SetCursor(this.toolTexture, hotSpot, cursorMode);
-            Debug.Log("Clicked on object" + tool.name + "Tool is" + tool.tag) ;
-
-
+            Debug.Log("Clicked on object" + tool.name + "Tool is" + tool.tag);
         }
     }
 }

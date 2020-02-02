@@ -7,7 +7,7 @@ public class ToolManager : SingletonBase<ToolManager>
 
     protected ToolManager() { }
     private GameObject currentObj;
-    private string repairType;
+    private Tooth.ToothType repairType;
     public GameObject getInActive()
     {
         return currentObj;
@@ -21,11 +21,11 @@ public class ToolManager : SingletonBase<ToolManager>
         currentObj = newObject;
         currentObj.SetActive(false);
     }
-    public string getrepairType()
+    public Tooth.ToothType getrepairType()
     {
         return repairType;
     }
-    public void setrepairMode(string repairMode)
+    public void setrepairMode(Tooth.ToothType repairMode)
     {
         repairType = repairMode;
     }
