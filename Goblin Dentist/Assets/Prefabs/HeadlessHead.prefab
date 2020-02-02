@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7059505259779803599}
   - component: {fileID: 3907394449154251937}
-  - component: {fileID: 4126330850349021661}
+  - component: {fileID: -1194783258889710566}
   m_Layer: 0
   m_Name: HeadlessHead
   m_TagString: Untagged
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4126330850349021661
+--- !u!114 &-1194783258889710566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1816501532103342082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 986c13fc581805941a79effdbbf03a87, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ff4d68cf43773a4e8baf7e782f825a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tooth: {fileID: 5713921104009508541, guid: e99699729815d164cb2017780d256ec3, type: 3}
