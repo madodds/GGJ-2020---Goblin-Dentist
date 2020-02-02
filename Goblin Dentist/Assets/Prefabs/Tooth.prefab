@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2429404420411140111}
   - component: {fileID: 383081229013091584}
   - component: {fileID: -2860293195710559770}
+  - component: {fileID: -5569125778636710200}
   m_Layer: 0
   m_Name: Tooth
   m_TagString: Untagged
@@ -44,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 497d6efc6dd2919459a42776abb8cc53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tool: {fileID: 0}
 --- !u!212 &-2860293195710559770
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -94,3 +96,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &-5569125778636710200
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5713921104009508541}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 2.25, y: 5.5}
+  m_Direction: 0
