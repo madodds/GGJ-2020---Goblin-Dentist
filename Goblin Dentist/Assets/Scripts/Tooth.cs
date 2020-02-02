@@ -90,6 +90,7 @@ public class Tooth : MonoBehaviour
                     //CapsuleCollider2D capsuleCollider = GetComponent<CapsuleCollider2D>();
                     //capsuleCollider.enabled = false;
                 }
+                AudioManager.Instance.toothRepair();
             }
         }
     }
