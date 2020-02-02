@@ -10,7 +10,8 @@ public abstract class Head : MonoBehaviour
         Jawless,
         Scary,
         Derpy,
-        Round
+        Round,
+        Headless
     }
     public GameObject tooth;
 
