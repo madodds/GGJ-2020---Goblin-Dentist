@@ -7,16 +7,24 @@ public abstract class Head : MonoBehaviour
     public enum HeadType
     {
         Pointy,
-        Scary
+        Scary,
+        Derpy
     }
-
-    public List<Tooth> teeth;
-
-    public abstract string SpriteLocation { get; }
+    public GameObject tooth;
 
     public abstract HeadType headType { get; }
 
-    public abstract void Init(int badToothProbability);
+    protected abstract int badToothProbability { get; }
 
-    public GameObject tooth;
+    protected abstract List<(Vector2 position, Vector2 scale, Tooth.ToothArea toothArea, int layerOrder)> toothData { get; }
+
+    protected virtual void Start()
+    {
+        foreach (var data in toothData)
+        {
+            GameObject newTooth = Instantiate(tooth);
+            Tooth toothComp = newTooth.GetComponent<Tooth>();
+            toothComp.Init(data.position, data.scale, data.toothArea, data.layerOrder, badToothProbability);
+        }
+    }
 }

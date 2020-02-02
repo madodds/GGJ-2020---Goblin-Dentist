@@ -32,10 +32,10 @@ public class Tooth : MonoBehaviour
     private List<(ToothType type, ToothAttribute attribute, string spritePath)> toothData 
         = new List<(ToothType type, ToothAttribute attribute, string spritePath)>
     {
-        (ToothType.Healthy, ToothAttribute.Healthy, "ArtAssets/Teeth/{0}/gobtooth_n"),
-        (ToothType.Wooden, ToothAttribute.Rotten, "ArtAssets/Teeth/{0}/gobtooth_w"),
-        (ToothType.Gold, ToothAttribute.Rotten, "ArtAssets/Teeth/{0}/gobtooth_g"),
-        (ToothType.Metal, ToothAttribute.Rotten, "ArtAssets/Teeth/{0}/gobtooth_m")
+        (ToothType.Healthy, ToothAttribute.Healthy, "Teeth/{0}/gobtooth_n"),
+        (ToothType.Wooden, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_w"),
+        (ToothType.Gold, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_g"),
+        (ToothType.Metal, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_m")
     };
 
     private (ToothType type, ToothAttribute attribute, string spritePath) toothSelection;
@@ -43,7 +43,7 @@ public class Tooth : MonoBehaviour
     public void Init(Vector2 position, Vector2 scale, ToothArea toothArea, int layerOrder, int badToothProbability)
     {
         // Determine if the tooth should be healthy.
-        ToothAttribute preferredAttribute = UnityEngine.Random.Range(1, 100) >= 
+        ToothAttribute preferredAttribute = UnityEngine.Random.Range(1, 100) < 
             badToothProbability ? ToothAttribute.Rotten : ToothAttribute.Healthy;
 
         // Randomly select a tooth of the healthiness determined.

@@ -12,7 +12,7 @@ public class HeadManager : MonoBehaviour
     void Start()
     {
         Debug.Log("here");
-        Instantiate(possibleHeads[0], this.transform);
+        Instantiate(possibleHeads[Random.Range(0, possibleHeads.Length)], this.transform);
         //currentHead.Init(50);
         //spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         //spriteRenderer.sprite = Resources.Load<Sprite>(currentHead.SpriteLocation);
