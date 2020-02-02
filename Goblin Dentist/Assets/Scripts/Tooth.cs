@@ -12,13 +12,15 @@ public class Tooth : MonoBehaviour
         Healthy,
         Wooden,
         Gold,
-        Metal
+        Metal,
+        Missing
     }
     
     enum ToothAttribute
     {
         Healthy,
-        Rotten
+        Rotten,
+        Missing
     }
 
     public enum ToothArea
@@ -35,39 +37,77 @@ public class Tooth : MonoBehaviour
         (ToothType.Healthy, ToothAttribute.Healthy, "Teeth/{0}/gobtooth_n"),
         (ToothType.Wooden, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_w"),
         (ToothType.Gold, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_g"),
-        (ToothType.Metal, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_m")
+        (ToothType.Metal, ToothAttribute.Rotten, "Teeth/{0}/gobtooth_m"),
+        (ToothType.Missing, ToothAttribute.Rotten, ""),
+        (ToothType.Missing, ToothAttribute.Missing, "")
     };
 
     private (ToothType type, ToothAttribute attribute, string spritePath) toothSelection;
+
+    private ToothArea selectedToothArea;
+    private ToothAttribute selectedAttribute;
+    private ToothType selectedToothType;
+
+    public Tool tool;
     
     public void Init(Vector3 position, Vector3 scale, ToothArea toothArea, int layerOrder, int badToothProbability)
     {
+        selectedToothArea = toothArea;
         // Determine if the tooth should be healthy.
-        ToothAttribute preferredAttribute = UnityEngine.Random.Range(1, 100) < 
+        selectedAttribute = UnityEngine.Random.Range(1, 100) < 
             badToothProbability ? ToothAttribute.Rotten : ToothAttribute.Healthy;
 
+        SpriteRenderer toothSprite = GetComponent<SpriteRenderer>();
+
+        // Setup the location and sprite
+        toothSprite.transform.position += position;
+        toothSprite.transform.localScale = scale;
+        toothSprite.sortingOrder = layerOrder;
+        SetToothState(selectedAttribute);
+    }
+    
+    private void OnMouseDown()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            SelectObject();
+        }
+    }
+
+    void SelectObject()
+    {
+        Vector3 clickPostion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        List<RaycastHit2D> hits = Physics2D.LinecastAll(clickPostion, clickPostion).ToList();
+        if (hits.Count() != 0)
+        {
+            if (toothSelection.type == ToolManager.Instance.getrepairType())
+            {
+                if (selectedAttribute == ToothAttribute.Rotten)
+                    SetToothState(ToothAttribute.Healthy);
+                else
+                {
+                    SetToothState(ToothAttribute.Missing);
+
+                    // Enable to disable object.
+                    //CapsuleCollider2D capsuleCollider = GetComponent<CapsuleCollider2D>();
+                    //capsuleCollider.enabled = false;
+                }
+            }
+        }
+    }
+
+    void SetToothState(ToothAttribute attribute)
+    {
+        SpriteRenderer toothSprite = GetComponent<SpriteRenderer>();
+
         // Randomly select a tooth of the healthiness determined.
-        var possibleTeeth = toothData.Where(t => t.attribute == preferredAttribute);
+        var possibleTeeth = toothData.Where(t => t.attribute == attribute);
         toothSelection = possibleTeeth.ElementAt(UnityEngine.Random.Range(0, possibleTeeth.Count()));
 
         // Set the tooth sprite path based on the area it exists. Requires the folder structure to be setup correctly.
-        toothSelection.spritePath = string.Format(toothSelection.spritePath, Enum.GetName(typeof(ToothArea), toothArea));
-
-        // Setup the location and sprite
-        SpriteRenderer toothSprite = GetComponent<SpriteRenderer>();
-        toothSprite.transform.position += position;
-        toothSprite.transform.localScale = scale;
+        toothSelection.spritePath = string.Format(toothSelection.spritePath, Enum.GetName(typeof(ToothArea), selectedToothArea));
         toothSprite.sprite = Resources.Load(toothSelection.spritePath, typeof(Sprite)) as Sprite;
-        toothSprite.sortingOrder = layerOrder;
-    }
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
+        selectedToothType = toothSelection.type;
+        selectedAttribute = attribute;
     }
 }
