@@ -6,17 +6,14 @@ using System.Linq;
 
 public class Tool : MonoBehaviour
 {
-    public string toolName;
+    public string repairMode;
     GameObject tool;
     public Texture2D toolTexture;
     public CursorMode cursorMode = CursorMode.ForceSoftware;
     public Vector2 hotSpot = Vector2.zero;
-    GameObject currentObj;
-    List<GameObject> tools;
     // Start is called before the first frame update
     void Start()
     {
-        currentObj = gameObject;
     }
 
     // Update is called once per frame
@@ -26,10 +23,6 @@ public class Tool : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             SelectObject();
-
-            //mousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            //transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
-
         }
     }
 
@@ -46,16 +39,9 @@ public class Tool : MonoBehaviour
             
 
             tool = hits[0].collider.gameObject;
-            //Texture2D cursorArrow = Instantiate(toolTexture, Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.rotation, tool.transform.parent );
-            //cursorArrow.Resize(width, height);
-
-
-            //cursorTexture.Resize(width - 100, height - 100);
-            //cursorTexture.Apply();
             ToolManager.Instance.setInActive(tool);
+            ToolManager.Instance.setrepairMode(repairMode);
             Cursor.SetCursor(this.toolTexture, hotSpot, cursorMode);
-            //tool.SetActive(false);
-            //tool.tag = "NotActive";
             Debug.Log("Clicked on object" + tool.name + "Tool is" + tool.tag) ;
 
 

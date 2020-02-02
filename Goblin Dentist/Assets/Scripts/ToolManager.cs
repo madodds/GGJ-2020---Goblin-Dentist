@@ -7,6 +7,7 @@ public class ToolManager : SingletonBase<ToolManager>
 
     protected ToolManager() { }
     private GameObject currentObj;
+    private string repairType;
     public GameObject getInActive()
     {
         return currentObj;
@@ -19,5 +20,13 @@ public class ToolManager : SingletonBase<ToolManager>
         }
         currentObj = newObject;
         currentObj.SetActive(false);
+    }
+    public string getrepairType()
+    {
+        return repairType;
+    }
+    public void setrepairMode(string repairMode)
+    {
+        repairType = repairMode;
     }
 }
