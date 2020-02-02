@@ -6,30 +6,13 @@ using System.Linq;
 
 public class Tool : MonoBehaviour
 {
-    RaycastHit2D frontMostRayCastHit;
     public string toolName;
-    bool select;
     GameObject tool;
-
-    private bool selected = false;
-
-    float zAxis = 2f;
-    Vector3 mousePosition;
-    Vector2 startPosition;
-    Vector2 direction;
-    public float moveSpeed = 100f;
-    WorldToPixel gameMousePos;
-    Rigidbody2D rb;
-
     public Texture2D toolTexture;
     public CursorMode cursorMode = CursorMode.ForceSoftware;
     public Vector2 hotSpot = Vector2.zero;
-    Material material;
-    Texture texture;
     GameObject currentObj;
     List<GameObject> tools;
-
-    RectTransform rt;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,22 +35,6 @@ public class Tool : MonoBehaviour
 
     void Update()
     {
-        tools = GameObject.FindGameObjectsWithTag("NotActive").ToList();
-        foreach(GameObject tool in tools)
-        {
-            if (currentObj.activeSelf == false &&  tool != this)
-            {
-                if(tool.activeSelf == false)
-                {
-                    currentObj.SetActive(true);
-                    currentObj.tag = null;
-                }
-            }
-            else
-            {
-                Debug.Log("Object:" + tool.name + "is Active:" + tool.activeSelf + " And Tag: " + tool.tag);
-            }
-        }
 
     }
     void SelectObject()
